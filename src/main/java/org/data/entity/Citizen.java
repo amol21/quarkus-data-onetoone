@@ -1,9 +1,7 @@
 package org.data.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
 
 @Entity
 public class Citizen {
@@ -13,13 +11,27 @@ public class Citizen {
     String name;
     String gender;
 
+    @OneToOne(mappedBy = "citizen",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @JsonManagedReference
+    Aadhar aadhar;
+
+
     public Citizen() {
     }
 
-    public Citizen(Long id, String name, String gender) {
+    public Citizen(Long id, String name, String gender, Aadhar aadhar) {
         this.id = id;
         this.name = name;
         this.gender = gender;
+        this.aadhar = aadhar;
+    }
+
+    public Aadhar getAadhar() {
+        return aadhar;
+    }
+
+    public void setAadhar(Aadhar aadhar) {
+        this.aadhar = aadhar;
     }
 
     public Long getId() {
